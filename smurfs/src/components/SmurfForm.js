@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SmurfForm = (props) => {
   const [input, setInput] = useState({
@@ -6,6 +6,12 @@ const SmurfForm = (props) => {
     age: '',
     height: ''
   })
+
+  useEffect(() => {
+    if (props.activeSmurf) {
+      setInput(props.activeSmurf);
+    }
+  }, [props.activeSmurf])
 
   const inputHandler = (event) => {
     setInput({
@@ -20,8 +26,11 @@ const SmurfForm = (props) => {
       ...input,
       age: parseInt(input.age)
     }
-    console.log(newSmurf)
-    props.addSmurf(newSmurf);
+    if (props.activeSmurf) {
+      props.editSmurf(newSmurf);
+    } else {
+      props.addSmurf(newSmurf);
+    }
     setInput({
       name: '',
       age: '',

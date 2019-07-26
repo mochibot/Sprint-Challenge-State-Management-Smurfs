@@ -59,6 +59,42 @@ export const reducer = (state = initialState, action) => {
         isAdding: false,
         error: action.payload
       }
+    case EDIT_SMURF_START:
+      return {
+        ...state,
+        isUpdating: true,
+        error: null
+      }
+    case EDIT_SMURF_SUCCESS:
+      return {
+        ...state,
+        isUpdating: false,
+        smurfs: action.payload
+      }
+    case EDIT_SMURF_FAILURE:
+      return {
+        ...state,
+        isUpdating: false,
+        error: action.payload
+      }
+    case DELETE_SMURF_START:
+      return {
+        ...state,
+        isDeleting: true,
+        error: null
+      }
+    case DELETE_SMURF_SUCCESS:
+      return {
+        ...state,
+        isDeleting: false,
+        smurfs: action.payload
+      }
+    case DELETE_SMURF_FAILURE:
+      return {
+        ...state,
+        isDeleting: false,
+        error: action.payload
+      }
     default: 
       return state;
   }

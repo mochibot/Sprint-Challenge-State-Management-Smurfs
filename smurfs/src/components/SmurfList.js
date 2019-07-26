@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { 
@@ -18,7 +18,8 @@ import SmurfForm from './SmurfForm';
 import Smurf from './Smurf'
 
 const SmurfList = () => {
-  const state = useSelector(state => state)
+  const state = useSelector(state => state);
+  const [activeSmurf, setActiveSmurf] = useState(null);
   const dispatch = useDispatch();
 
   const fetchSmurfs = () => {
@@ -63,16 +64,67 @@ const SmurfList = () => {
       })
   }
 
+  const editSmurf = (smurf) => {
+    dispatch({
+      type: EDIT_SMURF_START
+    })
+    axios.put(`http://localhost:3333/smurfs/${smurf.id}`, smurf)
+      .then(response => {
+        console.log('edit smurf success: ', response)
+        dispatch({
+          type: EDIT_SMURF_SUCCESS,
+          payload: response.data
+        })
+        setActiveSmurf(null);
+      })
+      .catch(error => {
+        console.log('edit smurf failure: ', error)
+        dispatch({
+          type: EDIT_SMURF_FAILURE,
+          payload: 'Error editing smurf'
+        })
+      })
+  }
+
+  const deleteSmurf = (id) => {
+    dispatch({
+      type: DELETE_SMURF_START
+    })
+    axios.delete(`http://localhost:3333/smurfs/${id}`)
+      .then(response => {
+        console.log('delete smurf success: ', response)
+        dispatch({
+          type: DELETE_SMURF_SUCCESS,
+          payload: response.data
+        })
+        fetchSmurfs();
+      })
+      .catch(error => {
+        console.log('delete smurf failure: ', error)
+        dispatch({
+          type: DELETE_SMURF_FAILURE,
+          payload: 'Error deleting smurf'
+        })
+      })
+  }
+
+  const selectSmurf = (event, smurf) => {
+    event.preventDefault();
+    setActiveSmurf(smurf)
+  }
+
   useEffect(() => {
     fetchSmurfs();
   }, [])
 
   return (
     <div>
-      <SmurfForm addSmurf={addSmurf}/>
+      <SmurfForm addSmurf={addSmurf} editSmurf={editSmurf} activeSmurf={activeSmurf}/>
       {state.isFetching && <div>Fetching smurfs</div>}
+      {state.isAdding && <div>Adding smurfs</div>}
+      {state.isDeleting && <div>Deleting smurfs</div>}
       {state.error && <div>{state.error}</div>}
-      {state.smurfs.map(item => <Smurf key={item.id} smurf={item}/>)}
+      {state.smurfs.map(item => <Smurf key={item.id} smurf={item} deleteSmurf={deleteSmurf} selectSmurf={selectSmurf}/>)}
     </div>
   )
 }
