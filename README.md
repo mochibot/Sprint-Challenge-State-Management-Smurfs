@@ -23,10 +23,24 @@ In this challenge, you are to build the Smurfs village once again, only this tim
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 - [ ] What problem does the context API help solve?
+
+Context API helps to simplify state management by solving the problem of props drilling as we can now store the global data that the components share, and pass the data in the necessary components from the context object, to keep the stat relatively clean. 
+
 - [ ] In your own words, describe `actions`, `reducers` and the `store` and their role in Redux. What does each piece do? Why is the store known as a 'single source of truth' in a redux application?
+
+Store can be thought as the single source of truth as it contains the state for the entire application and is immutable. Actions are information that contains an action type and some data that is associated with the action type, that are dispatched to the reducers. When reducers receive the action, it will know how to update the state according to the action type and the action payload. The original state is being replaced by the modified clone.
+
 - [ ] What is the difference between Application state and Component state? When would be a good time to use one over the other?
+
+Component state is stored locally within the particular component and is not accessible to other components unless it is passed down as props. Application state is a global state that is accessible to any components that is subscribed to it. For example, form component may have its own state as it handles input, but it does not necessarily need to pass down its state to other components.
+
 - [ ] Describe `redux-thunk`, what does it allow us to do? How does it change our `action-creators`?
+
+Redux-thunk is a middleware that looks at the actions that passed through the system, and if the action is a function, it will call that function. It is used to make the Redux action to reducer flow asynchronous, so that we can make the action do something, such as making API calls or trigger other actions. Or else the actions are just objects.
+
 - [ ] What is your favorite state management system you've learned and this sprint? Please explain why!
+
+I still prefer Redux, as I have not utilized Context API extensively. I like that we can use useSelector and useDispatch to replace mapstatetoprops and connect and to do async Redux without using thunk. From what I have read, Context API may be more useful for handling simple state management (eg. themes)and when you need to pass down a data that is nexted deep within the component tree.
 
 ## Project Set Up
 
