@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button, Form } from 'semantic-ui-react';
 
 const SmurfForm = (props) => {
   const [input, setInput] = useState({
@@ -39,16 +40,22 @@ const SmurfForm = (props) => {
   }
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <label>Name: </label>
-        <input name='name' value={input.name} onChange={inputHandler} required/>
-        <label>Age: </label>
-        <input type='number' name='age' value={input.age} onChange={inputHandler} required/>
-        <label>Height: </label>
-        <input name='height' value={input.height} onChange={inputHandler} required/>
-        <button>Submit</button>
-      </form>
+    <div className='form-container'>
+      <Form onSubmit={submitHandler}>
+        <Form.Field>
+          <label style={{'color': 'white', 'fontSize': '16px'}}>Name: </label>
+          <input name='name' value={input.name} onChange={inputHandler} required/>
+        </Form.Field>
+        <Form.Field>
+          <label style={{'color': 'white', 'fontSize': '16px'}}>Age: </label>
+          <input type='number' name='age' value={input.age} onChange={inputHandler} required/>
+        </Form.Field>
+        <Form.Field>
+          <label style={{'color': 'white', 'fontSize': '16px'}}>Height: </label>
+          <input name='height' value={input.height} onChange={inputHandler} required/>
+        </Form.Field>
+        <Button type='submit' inverted color='white'>Submit</Button>
+      </Form>
     </div>
   )
 }

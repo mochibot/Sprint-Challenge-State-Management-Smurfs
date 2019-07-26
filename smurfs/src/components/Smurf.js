@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card, Icon } from 'semantic-ui-react';
 
 const Smurf = (props) => {
 
@@ -8,13 +9,19 @@ const Smurf = (props) => {
   }
  
   return (
-    <div>
-      <div>Name: {props.smurf.name}</div>
-      <div>Age: {props.smurf.age}</div>
-      <div>Height: {props.smurf.height}</div>
-      <button onClick={(event) => props.selectSmurf(event, props.smurf)}>Edit</button>
-      <button onClick={(event) => deleteSmurf(event, props.smurf.id)}>Delete</button>
-    </div>
+    <Card style={{'height': '200px'}}>
+      <Card.Content>
+        <Card.Header style={{'font-family': 'Love Ya Like A Sister'}}>{props.smurf.name}</Card.Header>
+        <Card.Description>
+          <div>Age: {props.smurf.age}</div>
+          <div>Height: {props.smurf.height}</div>
+        </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+          <Icon name='edit outline' size='large' color='blue' onClick={(event) => props.selectSmurf(event, props.smurf)} />
+          <Icon name='trash alternate outline' size='large' color='red' onClick={(event) => deleteSmurf(event, props.smurf.id)} />
+      </Card.Content>
+    </Card>
   )
 }
 

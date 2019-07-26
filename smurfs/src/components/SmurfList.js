@@ -14,6 +14,7 @@ import {
   DELETE_SMURF_START,
   DELETE_SMURF_SUCCESS,
   DELETE_SMURF_FAILURE } from '../store/actions/index';
+import { Card } from 'semantic-ui-react';
 import SmurfForm from './SmurfForm';
 import Smurf from './Smurf'
 
@@ -118,13 +119,19 @@ const SmurfList = () => {
   }, [])
 
   return (
-    <div>
-      <SmurfForm addSmurf={addSmurf} editSmurf={editSmurf} activeSmurf={activeSmurf}/>
-      {state.isFetching && <div>Fetching smurfs</div>}
-      {state.isAdding && <div>Adding smurfs</div>}
-      {state.isDeleting && <div>Deleting smurfs</div>}
-      {state.error && <div>{state.error}</div>}
-      {state.smurfs.map(item => <Smurf key={item.id} smurf={item} deleteSmurf={deleteSmurf} selectSmurf={selectSmurf}/>)}
+    <div className='app-content'>
+      <div className='sidebar'>
+        <SmurfForm addSmurf={addSmurf} editSmurf={editSmurf} activeSmurf={activeSmurf}/>
+      </div>
+      <div className='content'>
+        {state.isFetching && <div>Fetching smurfs</div>}
+        {state.isAdding && <div>Adding smurfs</div>}
+        {state.isDeleting && <div>Deleting smurfs</div>}
+        {state.error && <div>{state.error}</div>}
+        <Card.Group itemsPerRow={3}>
+          {state.smurfs.map(item => <Smurf key={item.id} smurf={item} deleteSmurf={deleteSmurf} selectSmurf={selectSmurf}/>)}
+        </Card.Group> 
+      </div>
     </div>
   )
 }
